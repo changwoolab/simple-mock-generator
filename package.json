@@ -1,0 +1,11 @@
+{
+  "name": "mockDataGenerator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/changwoolab/mockDataGenerator.git",
+  "author": "changwoolab <cwyoo01@naver.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node ./src/index.ts"
+  }
+}
