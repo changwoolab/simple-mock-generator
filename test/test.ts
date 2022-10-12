@@ -2,14 +2,14 @@ import MockDataGenerator from '../src';
 
 class TestType {
   constructor() {
-    this.createdAt = new Date('2022-10-11T01:32:18.375Z');
-    this.title = 'asdf';
-    this.money = 1231;
+    this.createdAt = new Date();
+    this.title = ''
+    this.money = 1
   }
   createdAt: Date;
   title: string;
   money: number;
 }
 
-const a = MockDataGenerator(new TestType());
+const a = MockDataGenerator<TestType>(new TestType());
 console.log(a);
