@@ -62,8 +62,7 @@ class MockGenerator {
   }
 
   private generateNumber(numberOptions?: NumberOptions): number {
-    const min = numberOptions?.min ? numberOptions.min : 0;
-    const max = numberOptions?.max ? numberOptions.max : 50;
+    const { min, max } = numberOptions ? numberOptions : defaultNumberOptions;
     if (max < min) throw new Error('max is smaller than min');
     return min + Math.floor(Math.random() * (max - min));
   }

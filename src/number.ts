@@ -1,4 +1,4 @@
-export class NumberOptions {
+export interface NumberOptions {
   min: number;
   max: number;
 }
