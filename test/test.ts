@@ -1,4 +1,4 @@
-import { generateMockObj } from '../src';
+import MockGenerator from '../src';
 
 class TestType {
   constructor() {
@@ -11,5 +11,9 @@ class TestType {
   money: number;
 }
 
-const a = generateMockObj(new TestType());
+const gen = new MockGenerator()
+const a = gen.number();
 console.log(a);
+
+const al = gen.numberList(13);
+console.log(al);
