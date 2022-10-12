@@ -1,8 +1,16 @@
-interface NumberInput {
-  min: number;
-  max: number;
-}
+export type NumberOptions = {
+  min?: number;
+  max?: number;
+};
 
-export function generateNumber(numberInput?: NumberInput): number {
-  return Math.floor(Math.random() * 10);
+/**
+ * generate number in range ( min <= number < max )
+ * 
+ * default min = 0    
+ * default max = min + 50
+ */
+export function generateNumber(numberOptions?: NumberOptions): number {
+  const min = numberOptions?.min ? numberOptions.min : 0;
+  const max = numberOptions?.max ? numberOptions.max : min + 50;
+  return min + Math.floor(Math.random() * (max - min));
 }
