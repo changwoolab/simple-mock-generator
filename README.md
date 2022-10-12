@@ -1,3 +1,4 @@
 # mockDataGenerator
 
-Module that generates mock data
+Simple mock data generator for object, date, string, number
+
