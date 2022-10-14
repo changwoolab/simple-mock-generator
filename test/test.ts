@@ -12,8 +12,8 @@ class TestType {
 }
 
 const gen = new MockGenerator()
-const a = gen.number();
-console.log(a);
+const d = gen.date()
+console.log(d);
 
-const al = gen.numberList(13);
-console.log(al);
+const a = gen.dateList(10)
+console.log(a)

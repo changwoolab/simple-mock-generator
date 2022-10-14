@@ -1,4 +1,4 @@
-import { DateOptions } from './date';
+import { DateOptions, defaultDateOptions } from './date';
 import { defaultNumberOptions, NumberOptions } from './number';
 import { StringOptions } from './string';
 
@@ -27,7 +27,10 @@ class MockGenerator {
   }
 
   public date(dateOptions?: DateOptions) {
-    return new Date();
+    const { min, max } = dateOptions ? dateOptions : defaultDateOptions;
+    return new Date(
+      min.getTime() + Math.random() * (max.getTime() - min.getTime())
+    );
   }
 
   public dateList(length: number, dateOptions?: DateOptions) {
