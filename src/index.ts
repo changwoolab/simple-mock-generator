@@ -11,7 +11,9 @@ class MockGenerator {
    * default max = 50
    */
   public number(numberOptions?: NumberOptions) {
-    return this.generateNumber(numberOptions);
+    const { min, max } = numberOptions ? numberOptions : defaultNumberOptions;
+    if (max < min) throw new Error('max is smaller than min');
+    return min + Math.floor(Math.random() * (max - min));
   }
 
   /**
@@ -25,7 +27,7 @@ class MockGenerator {
   }
 
   public date(dateOptions?: DateOptions) {
-    return this.generateDate(dateOptions);
+    return new Date();
   }
 
   public dateList(length: number, dateOptions?: DateOptions) {
@@ -36,7 +38,16 @@ class MockGenerator {
 
   public objList() {}
 
-  public string() {}
+  public string(length: number, stringOptions?: StringOptions) {
+    let result = '';
+    let characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charLen = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charLen));
+    }
+    return result;
+  }
 
   public stringList() {}
 
@@ -51,35 +62,14 @@ class MockGenerator {
 
   private selectPusher(type: string): Function {
     if (type === 'number') {
-      return this.generateNumber;
+      return this.number;
     } else if (type === 'date') {
-      return this.generateDate;
+      return this.date;
     } else if (type === 'string'){
-      return this.generateString;
+      return this.string;
     } else {
       throw new Error('invalid function type')
     }
-  }
-
-  private generateNumber(numberOptions?: NumberOptions): number {
-    const { min, max } = numberOptions ? numberOptions : defaultNumberOptions;
-    if (max < min) throw new Error('max is smaller than min');
-    return min + Math.floor(Math.random() * (max - min));
-  }
-
-  private generateDate(dateOptions?: DateOptions): Date {
-    return new Date();
-  }
-
-  private generateString(length: number, stringOptions?: StringOptions): string {
-    let result = '';
-    let characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charLen = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charLen));
-    }
-    return result;
   }
 }
 
