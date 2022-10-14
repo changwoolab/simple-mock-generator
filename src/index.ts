@@ -1,5 +1,6 @@
 import { DateOptions, defaultDateOptions } from './date';
 import { defaultNumberOptions, NumberOptions } from './number';
+import { Options } from './obj';
 import { StringOptions } from './string';
 
 class MockGenerator {
@@ -7,7 +8,7 @@ class MockGenerator {
   /**
    * generate number in range ( min <= number < max )
    *
-   * default min = 0    
+   * default min = 0
    * default max = 50
    */
   public number(numberOptions?: NumberOptions) {
@@ -19,11 +20,15 @@ class MockGenerator {
   /**
    * generate number list within provided length in range ( min <= number < max )
    *
-   * default min = 0    
+   * default min = 0
    * default max = 50
    */
   public numberList(length: number, numberOptions?: NumberOptions) {
-    return this.generateList<number, NumberOptions>(length, 'number', numberOptions);
+    return this.generateList<number, NumberOptions>(
+      length,
+      'number',
+      numberOptions
+    );
   }
 
   public date(dateOptions?: DateOptions) {
@@ -37,11 +42,30 @@ class MockGenerator {
     return this.generateList<Date, DateOptions>(length, 'date', dateOptions);
   }
 
-  public obj() {}
+  public obj(options: Options) {
+    const { obj, depth = 0 } = options;
+    
+    if (depth > 500) throw new Error('Depth limit exceeded');
 
-  public objList() {}
+    const keys = Object.keys(obj);
+    for (const key of keys) {
+      const value = obj[key];
+      const type = value instanceof Date ? 'date' : typeof value;
+      const generator = this.selectGenerator(type);
+      options.depth = depth + 1;
+      generator(options);
+    }
+    return obj;
+  }
 
-  public string(length: number, stringOptions?: StringOptions) {
+  public objList(obj: any, length: number) {
+    const objList: any[] = [];
+    for (let i = 0; i < length; i++) objList.push(this.obj(obj));
+    return objList;
+  }
+
+  public string(stringOptions: StringOptions) {
+    const { length } = stringOptions;
     let result = '';
     let characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -55,7 +79,7 @@ class MockGenerator {
   public stringList() {}
 
   private generateList<T, U>(length: number, type: string, options?: U): T[] {
-    const pusher = this.selectPusher(type);
+    const pusher = this.selectGenerator(type);
     const li: T[] = [];
     for (let i = 0; i < length; i++) {
       li.push(pusher(options));
@@ -63,15 +87,17 @@ class MockGenerator {
     return li;
   }
 
-  private selectPusher(type: string): Function {
+  private selectGenerator(type: string): Function {
     if (type === 'number') {
       return this.number;
     } else if (type === 'date') {
       return this.date;
-    } else if (type === 'string'){
+    } else if (type === 'string') {
       return this.string;
+    } else if (type === 'object') {
+      return this.obj;
     } else {
-      throw new Error('invalid function type')
+      throw new Error('invalid function type');
     }
   }
 }

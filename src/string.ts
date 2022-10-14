@@ -1,4 +1,4 @@
 export type StringOptions = {
-  length?: number;
+  length: number;
   includeNumber?: boolean;
 };
