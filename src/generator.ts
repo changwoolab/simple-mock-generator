@@ -56,7 +56,7 @@ class MockGenerator {
    * default min = random
    * default max = random
    */
-  public dateList(length: number, dateOptions?: DateOptions) {
+  public dateList(length: number, dateOptions?: DateOptions): Date[] {
     return this.generateList<Date, DateOptions>(length, 'date', dateOptions);
   }
 
@@ -81,7 +81,7 @@ class MockGenerator {
   /**
    * generates random string within given string options
    */
-  public string(stringOptions: StringOptions) {
+  public string(stringOptions: StringOptions): string {
     const { length } = stringOptions;
     let result = '';
     let characters =
@@ -96,7 +96,9 @@ class MockGenerator {
   /**
    * generates a list of random string within given string options
    */
-  public stringList() {}
+  public stringList(length: number, stringOptions: StringOptions): string[] {
+    return this.generateList<string, StringOptions>(length, 'string', stringOptions);
+  }
 
   private generateList<T, U>(length: number, type: string, options?: U): T[] {
     const pusher = this.selectGenerator(type).bind(this);
