@@ -12,7 +12,7 @@ class TestType {
 }
 
 const gen = new MockGenerator()
-const d = gen.obj({
-    obj: new TestType()
+const d = gen.object({
+    object: new TestType()
 })
 console.log(d);

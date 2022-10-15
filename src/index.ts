@@ -1,7 +1,7 @@
 import { DateOptions, defaultDateOptions } from './date';
 import { defaultNumberOptions, NumberOptions } from './number';
 import { Options } from './obj';
-import { StringOptions } from './string';
+import { defaultStringOptions, StringOptions } from './string';
 
 class MockGenerator {
   constructor() {}
@@ -32,7 +32,7 @@ class MockGenerator {
   }
 
   public date(dateOptions?: DateOptions) {
-    const { min, max } = dateOptions ? dateOptions : defaultDateOptions;
+    const { min, max } = dateOptions ? dateOptions : defaultDateOptions();
     return new Date(
       min.getTime() + Math.random() * (max.getTime() - min.getTime())
     );
@@ -42,26 +42,44 @@ class MockGenerator {
     return this.generateList<Date, DateOptions>(length, 'date', dateOptions);
   }
 
-  public obj(options: Options) {
-    const { obj, depth = 0 } = options;
-    
+  public object(options: Options): object {
+    options = this.initializeOptions(options);
+
+    const newobject = this.loopKeysAndGenerate(options);
+
+    return newobject;
+  }
+
+  private initializeOptions(options: Options): Options {
+    const { object,
+      depth = 0, 
+      string = defaultStringOptions, 
+      number = defaultNumberOptions, 
+      date = defaultDateOptions() 
+    } = options
+
+    return { object, depth, string, number, date };
+  }
+
+  private loopKeysAndGenerate(options: Options): object {
+    const { object, depth = 0 } = options;
     if (depth > 500) throw new Error('Depth limit exceeded');
 
-    const keys = Object.keys(obj);
+    const keys = Object.keys(object);
     for (const key of keys) {
-      const value = obj[key];
+      const value: any = object[key as keyof object];
       const type = value instanceof Date ? 'date' : typeof value;
       const generator = this.selectGenerator(type);
       options.depth = depth + 1;
-      generator(options);
+      object[key as keyof object] = generator(options[type]) as never;
     }
-    return obj;
+    return object;
   }
 
-  public objList(obj: any, length: number) {
-    const objList: any[] = [];
-    for (let i = 0; i < length; i++) objList.push(this.obj(obj));
-    return objList;
+  public objectList(object: any, length: number) {
+    const objectList: any[] = [];
+    for (let i = 0; i < length; i++) objectList.push(this.object(object));
+    return objectList;
   }
 
   public string(stringOptions: StringOptions) {
@@ -95,7 +113,7 @@ class MockGenerator {
     } else if (type === 'string') {
       return this.string;
     } else if (type === 'object') {
-      return this.obj;
+      return this.object;
     } else {
       throw new Error('invalid function type');
     }

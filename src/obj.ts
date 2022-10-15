@@ -2,10 +2,16 @@ import { DateOptions } from "./date";
 import { NumberOptions } from "./number";
 import { StringOptions } from "./string";
 
+/** TODO! */
 export type Options = {
-  obj: any;
+  object: object;
   depth?: number;
-  stringOptions?: StringOptions;
-  numberOptions?: NumberOptions;
-  dateOptions?: DateOptions;
+  string?: StringOptions;
+  number?: NumberOptions;
+  date?: DateOptions;
+  bigint?: bigint;
+  boolean?: boolean;
+  symbol?: symbol;
+  undefined?: undefined;
+  function?: Function;
 };
