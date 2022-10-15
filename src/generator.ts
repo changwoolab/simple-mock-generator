@@ -81,13 +81,13 @@ class MockGenerator {
   /**
    * generates random string within given string options
    */
-  public string(stringOptions: StringOptions): string {
-    const { length } = stringOptions;
+  public string(stringOptions?: StringOptions): string {
+    const { strlen } = stringOptions ? stringOptions : defaultStringOptions;
     let result = '';
     let characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charLen = characters.length;
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < strlen; i++) {
       result += characters.charAt(Math.floor(Math.random() * charLen));
     }
     return result;
@@ -96,7 +96,7 @@ class MockGenerator {
   /**
    * generates a list of random string within given string options
    */
-  public stringList(length: number, stringOptions: StringOptions): string[] {
+  public stringList(length: number, stringOptions?: StringOptions): string[] {
     return this.generateList<string, StringOptions>(length, 'string', stringOptions);
   }
 

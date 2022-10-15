@@ -12,8 +12,6 @@ class TestType {
 }
 
 const gen = new MockGenerator()
-const d = gen.objectList(10, {
-    object: new TestType()
-})
+const d = gen.stringList(10)
 console.log(d);
 
