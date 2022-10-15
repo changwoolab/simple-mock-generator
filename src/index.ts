@@ -50,32 +50,6 @@ class MockGenerator {
     return newobject;
   }
 
-  private initializeOptions(options: Options): Options {
-    const { object,
-      depth = 0, 
-      string = defaultStringOptions, 
-      number = defaultNumberOptions, 
-      date = defaultDateOptions() 
-    } = options
-
-    return { object, depth, string, number, date };
-  }
-
-  private loopKeysAndGenerate(options: Options): object {
-    const { object, depth = 0 } = options;
-    if (depth > 500) throw new Error('Depth limit exceeded');
-
-    const keys = Object.keys(object);
-    for (const key of keys) {
-      const value: any = object[key as keyof object];
-      const type = value instanceof Date ? 'date' : typeof value;
-      const generator = this.selectGenerator(type);
-      options.depth = depth + 1;
-      object[key as keyof object] = generator(options[type]) as never;
-    }
-    return object;
-  }
-
   public objectList(object: any, length: number) {
     const objectList: any[] = [];
     for (let i = 0; i < length; i++) objectList.push(this.object(object));
@@ -117,6 +91,33 @@ class MockGenerator {
     } else {
       throw new Error('invalid function type');
     }
+  }
+
+  private initializeOptions(options: Options): Options {
+    const {
+      object,
+      depth = 0,
+      string = defaultStringOptions,
+      number = defaultNumberOptions,
+      date = defaultDateOptions(),
+    } = options;
+
+    return { object, depth, string, number, date };
+  }
+
+  private loopKeysAndGenerate(options: Options): object {
+    const { object, depth = 0 } = options;
+    if (depth > 500) throw new Error('Depth limit exceeded');
+
+    const keys = Object.keys(object);
+    for (const key of keys) {
+      const value: any = object[key as keyof object];
+      const type = value instanceof Date ? 'date' : typeof value;
+      const generator = this.selectGenerator(type);
+      options.depth = depth + 1;
+      object[key as keyof object] = generator(options[type]) as never;
+    }
+    return object;
   }
 }
 
