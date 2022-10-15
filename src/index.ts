@@ -58,9 +58,10 @@ class MockGenerator {
    * generates object with random value within provided options
    */
   public object(options: Options): object {
-    options = this.initializeOptions(options);
+    console.log(this);
+    const initOptions = this.initializeOptions(options);
 
-    const newobject = this.loopKeysAndGenerate(options);
+    const newobject = this.loopKeysAndGenerate(initOptions);
 
     return newobject;
   }
@@ -69,9 +70,7 @@ class MockGenerator {
    * generates object list with random value within provided options
    */
   public objectList(length: number, options: Options): object[] {
-    const objectList: object[] = [];
-    for (let i = 0; i < length; i++) objectList.push(this.object(options));
-    return objectList;
+    return this.generateList<object, Options>(length, 'object', options);
   }
 
   /**
@@ -95,7 +94,7 @@ class MockGenerator {
   public stringList() {}
 
   private generateList<T, U>(length: number, type: string, options?: U): T[] {
-    const pusher = this.selectGenerator(type);
+    const pusher = this.selectGenerator(type).bind(this);
     const li: T[] = [];
     for (let i = 0; i < length; i++) {
       li.push(pusher(options));
