@@ -6,24 +6,24 @@ import { defaultStringOptions, StringOptions } from './string';
 class MockGenerator {
   constructor() {}
   /**
-   * generate number in range ( min <= number < max )
+   * generates number in range ( min <= number < max )
    *
    * default min = 0
    * default max = 50
    */
-  public number(numberOptions?: NumberOptions) {
+  public number(numberOptions?: NumberOptions): number {
     const { min, max } = numberOptions ? numberOptions : defaultNumberOptions;
     if (max < min) throw new Error('max is smaller than min');
     return min + Math.floor(Math.random() * (max - min));
   }
 
   /**
-   * generate number list within provided length in range ( min <= number < max )
+   * generates number list within provided length in range ( min <= number < max )
    *
    * default min = 0
    * default max = 50
    */
-  public numberList(length: number, numberOptions?: NumberOptions) {
+  public numberList(length: number, numberOptions?: NumberOptions): number[] {
     return this.generateList<number, NumberOptions>(
       length,
       'number',
@@ -31,17 +31,32 @@ class MockGenerator {
     );
   }
 
-  public date(dateOptions?: DateOptions) {
+  /**
+   * generates date within range min <= date < max
+   *
+   * default min = random
+   * default max = random
+   */
+  public date(dateOptions?: DateOptions): Date {
     const { min, max } = dateOptions ? dateOptions : defaultDateOptions();
     return new Date(
       min.getTime() + Math.random() * (max.getTime() - min.getTime())
     );
   }
 
+  /**
+   * generates date list within range min <= date < max
+   *
+   * default min = random
+   * default max = random
+   */
   public dateList(length: number, dateOptions?: DateOptions) {
     return this.generateList<Date, DateOptions>(length, 'date', dateOptions);
   }
 
+  /**
+   * generates object with random value within provided options
+   */
   public object(options: Options): object {
     options = this.initializeOptions(options);
 
@@ -50,12 +65,18 @@ class MockGenerator {
     return newobject;
   }
 
-  public objectList(object: any, length: number) {
-    const objectList: any[] = [];
-    for (let i = 0; i < length; i++) objectList.push(this.object(object));
+  /**
+   * generates object list with random value within provided options
+   */
+  public objectList(length: number, options: Options): object[] {
+    const objectList: object[] = [];
+    for (let i = 0; i < length; i++) objectList.push(this.object(options));
     return objectList;
   }
 
+  /**
+   * generates random string within given string options
+   */
   public string(stringOptions: StringOptions) {
     const { length } = stringOptions;
     let result = '';
@@ -68,6 +89,9 @@ class MockGenerator {
     return result;
   }
 
+  /**
+   * generates a list of random string within given string options
+   */
   public stringList() {}
 
   private generateList<T, U>(length: number, type: string, options?: U): T[] {
