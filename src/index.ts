@@ -2,6 +2,7 @@ import { DateOptions, defaultDateOptions } from './date';
 import { defaultNumberOptions, NumberOptions } from './number';
 import { Options } from './obj';
 import { defaultStringOptions, StringOptions } from './string';
+import _ from 'lodash';
 
 class MockGenerator {
   constructor() {}
@@ -58,10 +59,9 @@ class MockGenerator {
    * generates object with random value within provided options
    */
   public object(options: Options): object {
-    console.log(this);
-    const initOptions = this.initializeOptions(options);
+    const initializedOptions = this.initializeOptions(options);
 
-    const newobject = this.loopKeysAndGenerate(initOptions);
+    const newobject = this.loopKeysAndGenerate(initializedOptions);
 
     return newobject;
   }
@@ -125,7 +125,13 @@ class MockGenerator {
       date = defaultDateOptions(),
     } = options;
 
-    return { object, depth, string, number, date };
+    return {
+      object: _.cloneDeep(object),
+      depth,
+      string,
+      number,
+      date,
+    };
   }
 
   private loopKeysAndGenerate(options: Options): object {
