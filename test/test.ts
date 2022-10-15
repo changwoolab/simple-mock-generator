@@ -1,4 +1,4 @@
-import MockGenerator from '../src';
+import { MockGenerator } from "../src";
 
 class TestType {
   constructor() {
