@@ -7,11 +7,5 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node ./src/index.ts"
-  },
-  "dependencies": {
-    "lodash": "^4.17.21"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.14.186"
   }
 }

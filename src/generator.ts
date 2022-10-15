@@ -7,7 +7,6 @@ import {
   Options,
   StringOptions,
 } from './types';
-import _ from 'lodash';
 
 class MockGenerator {
   constructor() {}
@@ -133,7 +132,7 @@ class MockGenerator {
     } = options;
 
     return {
-      object: _.cloneDeep(object),
+      object,
       depth,
       string,
       number,
@@ -145,15 +144,16 @@ class MockGenerator {
     const { object, depth = 0 } = options;
     if (depth > 500) throw new Error('Depth limit exceeded');
 
+    const newObj = {}
     const keys = Object.keys(object);
     for (const key of keys) {
       const value: any = object[key as keyof object];
       const type = value instanceof Date ? 'date' : typeof value;
       const generator = this.selectGenerator(type);
       options.depth = depth + 1;
-      object[key as keyof object] = generator(options[type]) as never;
+      newObj[key as keyof object] = generator(options[type]) as never;
     }
-    return object;
+    return newObj;
   }
 }
 
