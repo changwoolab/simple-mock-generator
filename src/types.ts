@@ -19,10 +19,14 @@ export interface DateOptions {
   max: Date;
 }
 
-export const defaultDateOptions = (): DateOptions => ({
-  min: new Date(new Date().getTime() - Math.random() * 1e12),
-  max: new Date(new Date().getTime() - Math.random() * 1e11),
-});
+export const defaultDateOptions = (): DateOptions => {
+  const min = new Date(new Date().getTime() - Math.random() * 1e12);
+  const max = new Date(min.getTime() + Math.random() * 1e12);
+  return {
+    min,
+    max,
+  };
+};
 
 export interface NumberOptions {
   min: number;
@@ -37,7 +41,7 @@ export const defaultNumberOptions: NumberOptions = {
 export interface StringOptions {
   strlen: number;
   includeNumber?: boolean;
-};
+}
 
 export const defaultStringOptions: StringOptions = {
   strlen: 10,

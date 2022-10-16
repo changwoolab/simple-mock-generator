@@ -40,7 +40,7 @@ class MockGenerator {
    * generates date within range min <= date < max
    *
    * default min = random
-   * default max = random
+   * default max = random but bigger than min
    */
   public date(dateOptions?: DateOptions): Date {
     const { min, max } = dateOptions ? dateOptions : defaultDateOptions();

@@ -17,3 +17,5 @@ const d = gen.objectList(10, {
 })
 console.log(d);
 
+const a = gen.date();
+console.log(a)
