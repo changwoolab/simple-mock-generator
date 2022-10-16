@@ -1,0 +1,29 @@
+{
+  "name": "simple-mock-generator",
+  "version": "1.0.7",
+  "description": "simple mock data generator",
+  "main": "index.js",
+  "repository": "https://github.com/changwoolab/mockDataGenerator.git",
+  "author": "changwoolab <cwyoo01@naver.com>",
+  "license": "MIT",
+  "keywords": [
+    "mock",
+    "data",
+    "generator",
+    "gen",
+    "simple",
+    "generate"
+  ],
+  "homepage": "https://github.com/changwoolab/mockDataGenerator",
+  "bugs": {
+    "url": "https://github.com/changwoolab/mockDataGenerator"
+  },
+  "files": [
+    "generator.d.ts",
+    "generator.js",
+    "index.d.ts",
+    "index.js",
+    "types.d.ts",
+    "types.js"
+  ]
+}
