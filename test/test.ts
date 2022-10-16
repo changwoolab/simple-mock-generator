@@ -12,8 +12,11 @@ class TestType {
 }
 
 const gen = new MockGenerator()
-const b = gen.boolean();
-console.log(b)
 
-const bl = gen.booleanList(10);
+const a = undefined;
+
+const bl = gen.object({
+  object: new TestType(),
+  string: { strlen: 17 },
+});
 console.log(bl);

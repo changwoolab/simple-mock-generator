@@ -148,7 +148,7 @@ class MockGenerator {
     } else if (type === 'boolean') {
       return this.boolean;
     } else {
-      throw new Error('invalid function type');
+      throw new Error(`type '${type}' is not supported`);
     }
   }
 

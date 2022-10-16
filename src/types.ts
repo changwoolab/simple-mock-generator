@@ -1,17 +1,24 @@
-/** TODO! */
-export type Options = {
-  object: object;
-  depth?: number;
-  string?: StringOptions;
-  number?: NumberOptions;
-  date?: DateOptions;
-  boolean?: boolean;
+/**
+ * SUPPORTED TYPES: object, string, number, date, boolean
+ * 
+ * NOT SUPPORTED: bigint, symbol, undefined, function
+*/
+export class Options {
+  constructor() {
+    this.object = {};
+  }
+  public object: object;
+  public depth?: number;
+  public string?: StringOptions;
+  public number?: NumberOptions;
+  public date?: DateOptions;
+  public boolean?: boolean;
 
-  // TODO!!
-  bigint?: bigint;
-  symbol?: symbol;
-  undefined?: undefined;
-  function?: Function;
+  // NOT SUPPORTED
+  private bigint?: bigint;
+  private symbol?: symbol;
+  private undefined?: undefined;
+  private function?: Function;
 };
 
 export interface DateOptions {
