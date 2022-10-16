@@ -112,6 +112,21 @@ class MockGenerator {
     );
   }
 
+  /**
+   * generates random boolean value
+   */
+  public boolean(): boolean {
+    const random = Math.random();
+    return random > 0.5;
+  }
+
+  /**
+   * generates a list of random boolean value within given length
+   */
+  public booleanList(length: number): boolean[] {
+    return this.generateList<boolean, undefined>(length, 'boolean');
+  }
+
   private generateList<T, U>(length: number, type: string, options?: U): T[] {
     const pusher = this.selectGenerator(type).bind(this);
     const li: T[] = [];
@@ -130,6 +145,8 @@ class MockGenerator {
       return this.string;
     } else if (type === 'object') {
       return this.object;
+    } else if (type === 'boolean') {
+      return this.boolean;
     } else {
       throw new Error('invalid function type');
     }

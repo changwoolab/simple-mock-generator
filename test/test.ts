@@ -12,8 +12,8 @@ class TestType {
 }
 
 const gen = new MockGenerator()
-const s = gen.string({
-  strlen: 50,
-  includeNumber: true,
-});
-console.log(s);
+const b = gen.boolean();
+console.log(b)
+
+const bl = gen.booleanList(10);
+console.log(bl);
