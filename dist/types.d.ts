@@ -1,16 +1,21 @@
-/** TODO! */
-export declare type Options = {
+/**
+ * SUPPORTED TYPES: object, string, number, date, boolean
+ *
+ * NOT SUPPORTED: bigint, symbol, undefined, function
+*/
+export declare class Options {
+    constructor();
     object: object;
     depth?: number;
     string?: StringOptions;
     number?: NumberOptions;
     date?: DateOptions;
     boolean?: boolean;
-    bigint?: bigint;
-    symbol?: symbol;
-    undefined?: undefined;
-    function?: Function;
-};
+    private bigint?;
+    private symbol?;
+    private undefined?;
+    private function?;
+}
 export interface DateOptions {
     min: Date;
     max: Date;

@@ -125,7 +125,7 @@ class MockGenerator {
             return this.boolean;
         }
         else {
-            throw new Error('invalid function type');
+            throw new Error(`type '${type}' is not supported`);
         }
     }
     initializeOptions(options) {
