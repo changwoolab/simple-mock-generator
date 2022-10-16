@@ -1,5 +1,9 @@
 ## How to use?
 
+```
+npm i simple-mock-generator
+```
+
 ```tsx
 import { MockGenerator } from 'simple-mock-generator'
 
