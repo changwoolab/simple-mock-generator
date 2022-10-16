@@ -5,10 +5,10 @@ export type Options = {
   string?: StringOptions;
   number?: NumberOptions;
   date?: DateOptions;
+  boolean?: boolean;
 
   // TODO!!
   bigint?: bigint;
-  boolean?: boolean;
   symbol?: symbol;
   undefined?: undefined;
   function?: Function;
