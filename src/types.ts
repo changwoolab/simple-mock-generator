@@ -45,5 +45,5 @@ export interface StringOptions {
 
 export const defaultStringOptions: StringOptions = {
   strlen: 10,
-  includeNumber: true,
+  includeNumber: false,
 };

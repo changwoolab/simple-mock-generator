@@ -12,10 +12,8 @@ class TestType {
 }
 
 const gen = new MockGenerator()
-const d = gen.objectList(10, {
-  object: new TestType()
-})
-console.log(d);
-
-const a = gen.date();
-console.log(a)
+const s = gen.string({
+  strlen: 50,
+  includeNumber: true,
+});
+console.log(s);

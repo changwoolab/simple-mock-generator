@@ -79,12 +79,18 @@ class MockGenerator {
 
   /**
    * generates random string within given string options
+   *
+   * default strlen = 10,
+   * default includeNumber = false
    */
   public string(stringOptions?: StringOptions): string {
-    const { strlen } = stringOptions ? stringOptions : defaultStringOptions;
+    const { strlen, includeNumber = false } = stringOptions
+      ? stringOptions
+      : defaultStringOptions;
     let result = '';
-    let characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    if (includeNumber) characters += '0123456789';
+
     const charLen = characters.length;
     for (let i = 0; i < strlen; i++) {
       result += characters.charAt(Math.floor(Math.random() * charLen));
@@ -94,9 +100,16 @@ class MockGenerator {
 
   /**
    * generates a list of random string within given string options
+   *
+   * default strlen = 10,
+   * default includeNumber = false
    */
   public stringList(length: number, stringOptions?: StringOptions): string[] {
-    return this.generateList<string, StringOptions>(length, 'string', stringOptions);
+    return this.generateList<string, StringOptions>(
+      length,
+      'string',
+      stringOptions
+    );
   }
 
   private generateList<T, U>(length: number, type: string, options?: U): T[] {
@@ -144,7 +157,7 @@ class MockGenerator {
     const { object, depth = 0 } = options;
     if (depth > 500) throw new Error('Depth limit exceeded');
 
-    const newObj = {}
+    const newObj = {};
     const keys = Object.keys(object);
     for (const key of keys) {
       const value: any = object[key as keyof object];
