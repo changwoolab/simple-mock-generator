@@ -12,6 +12,20 @@ const gen = new MockGenerator();
 const mockStringValue = gen.string();
 ```
 
+### YOU MUST INITIALIZE CLASS OR INTERFACE
+like these
+
+```tsx
+class Post {
+  constructor() {
+    this.title = ''
+    this.createdAt = new Date()
+  }
+  title: string;
+  createdAt: Date;
+}
+```
+
 ## When to use?
 
 When you need to make nestJS test using jest, you need to make mock data.
