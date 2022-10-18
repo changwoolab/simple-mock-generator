@@ -109,23 +109,19 @@ class MockGenerator {
         return li;
     }
     selectGenerator(type) {
-        if (type === 'number') {
-            return this.number;
-        }
-        else if (type === 'date') {
-            return this.date;
-        }
-        else if (type === 'string') {
-            return this.string;
-        }
-        else if (type === 'object') {
-            return this.object;
-        }
-        else if (type === 'boolean') {
-            return this.boolean;
-        }
-        else {
-            throw new Error(`type '${type}' is not supported`);
+        switch (type) {
+            case 'number':
+                return this.number;
+            case 'date':
+                return this.date;
+            case 'string':
+                return this.string;
+            case 'object':
+                return this.object;
+            case 'boolean':
+                return this.boolean;
+            default:
+                throw new Error(`type '${type}' is not supported`);
         }
     }
     initializeOptions(options) {
