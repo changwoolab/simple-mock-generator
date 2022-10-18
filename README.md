@@ -41,6 +41,20 @@ The only thing you need to do is this!
 const mockValue = gen.objectList(50, { object: new Post() });
 ```
 
+## Caution
+### YOU MUST INITIALIZE CLASS OR INTERFACE
+example
+```tsx
+class Post {
+  constructor() {
+    this.title = ''
+    this.createdAt = new Date()
+  }
+  title: string;
+  createdAt: Date;
+}
+```
+
 ## Supports
 
 1. string
